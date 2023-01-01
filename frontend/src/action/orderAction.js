@@ -1,11 +1,11 @@
 import axios from "axios";
 
-export const placeOrder = (token,address,TotalPrice) => async (dispatch,getState) => {
+export const placeOrder = (address,total) => async (dispatch,getState) => {
     dispatch({type:"PLACE_ORDER_REQUEST"})
     const currentUser = getState().loginUserReducer.currentUser
     const cartItems = getState().cartReducer.cartItems
     try {
-        const res = await axios.post('/api/orders/placeorder',{token,address,TotalPrice,currentUser,cartItems})
+        const res = await axios.post('/api/orders/placeorder',{address,currentUser,cartItems,total})
         dispatch({type:"PLACE_ORDER_SUCCESS"})
         window.location.href="/orders";
 
@@ -19,6 +19,18 @@ export const getOrders = () => async (dispatch) => {
     
     try {
         const res = await axios.get('/api/orders/getorders')
+        dispatch({type:"GET_ORDERS_SUCCESS", payload:res.data})
+    }
+    catch (error) {
+        dispatch({type:"GET_ORDERS_FAIL",payload:error})   
+
+    }
+}
+export const getUserOrders = () => async (dispatch,getState) => {
+    dispatch({type:"GET_ORDERS_REQUEST"})
+    const currentUser = getState().loginUserReducer.currentUser
+    try {
+        const res = await axios.get(`/api/orders/getuserorders?${currentUser}`)
         dispatch({type:"GET_ORDERS_SUCCESS", payload:res.data})
     }
     catch (error) {

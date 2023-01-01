@@ -1,0 +1,13 @@
+#Small:checked ~ div {
+    --tw-translate-x: 0%;
+  }
+  
+  #Medium:checked ~ div {
+    --tw-translate-x: 100%;
+  }
+  
+  #Large:checked ~ div {
+    --tw-translate-x: 200%;
+  }
+  
+

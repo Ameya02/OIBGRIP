@@ -6,8 +6,7 @@ import { HashLink } from 'react-router-hash-link';
 const SubNav = () => {
     
     const links = [
-        { name: 'Pizzas', to: '/menu'},
-        { name: 'Custom Pizzas', to: '/menu' },
+        { name: 'Pizzas', to: '/menu#pizzas'},
        
       ];
       const cartState =useSelector(state => state.cartReducer);
@@ -35,7 +34,7 @@ const SubNav = () => {
   ))} 
         
       </ul>
-      <a href='/cart' className='font-medium flex justify-end text-gray-700 pr-10'><GiShoppingCart /> {TotaTArray.length}</a>
+      <a href='/cart' className='font-semibold flex justify-end text-white pr-10'><GiShoppingCart /> {TotaTArray.length}</a>
       </nav>  )
 }
 

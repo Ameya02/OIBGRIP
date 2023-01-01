@@ -17,26 +17,26 @@ const links = [
   { name: 'Awards', to: '/awards'},
   { name: 'Contact Us', to: '/contact-us'},
 ];
-const Navbar = () => {
+const Navbar = ({trans}) => {
   const [toggleMenu, setToggleMenu] = useState(false);
   const dispatch = useDispatch();
   const user = useSelector((state)=>state.loginUserReducer);
   const {currentUser} = user;
   return (
-    <nav className="navbar w-screen h-[5.5rem] flex justify-between items-center bg-[#D75113] pt-4 pr-8">
+    <nav className={`navbar w-screen h-[5.5rem] flex justify-between items-center ${trans?"bg-transparent": "bg-[#F4490E]"}  pt-4 pr-8`}>
       <div className="logo flex flex-start items-center">
         <img src={logo} alt="app__logo" className='w-[150px]' />
       </div>
       
-      <ul className="links flex-1 flex justify-center items-center text-[aqua] list-none">
+      <ul className="links flex-1 flex justify-center items-center font-[30px] text-white list-none">
         
           {links.map((item) => (
             <li className="p__opensans">
     <NavLink 
     key={item.name}
     to={item.to}
-    className="flex flex-row justify-start items-center my-8 text-sm
-    font-medium  text-cyan-400 hover:text-gray-400"
+    className="flex flex-row justify-start items-center my-8 
+    font-medium text-md  text-white hover:text-gray-400"
     onClick={() => handleClick && handleClick()}
     >
       {item.name}
@@ -49,7 +49,7 @@ const Navbar = () => {
       { currentUser ? (
         <div className='justify-end items-center relative inline-block hover:block'> 
         
-        <NavDropdown title={currentUser.name} id="nav-dropdown" className=' text-cyan-400 hover:text-gray-400' >
+        <NavDropdown title={currentUser.name} id="nav-dropdown" className=' text-md text-white hover:text-gray-400' >
         <NavDropdown.Item href="/orders">Order</NavDropdown.Item>
         <NavDropdown.Divider />
         <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
@@ -60,7 +60,7 @@ const Navbar = () => {
       
       )
       : (
-        <div className="login text-sm  text-cyan-400 hover:text-red-400 flex justify-end items-center">
+        <div className="login text-md  text-white hover:text-red-400 flex justify-end items-center">
         <a href="login" className="p__opensans">Log In / Registration</a>
         </div>
       )
@@ -77,8 +77,8 @@ const Navbar = () => {
     <NavLink 
     key={item.name}
     to={item.to}
-    className="flex flex-row justify-start items-center my-8 text-sm
-    font-medium  text-cyan-400 hover:text-gray-400"
+    className="flex flex-row justify-start items-center my-8 text-md
+    font-medium  text-white hover:text-gray-400"
     onClick={() => handleClick && handleClick()}
     >
       {item.name}

@@ -1,37 +1,23 @@
 import { loadStripe } from '@stripe/stripe-js';
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import {placeOrder} from "../../action/orderAction";
-const CheckoutForm = () => {
-  let card = null;
-  
-  useEffect( () => {
-     async function initStripe () {
-    const stripe_client = await loadStripe(import.meta.env.VITE_STRIPE_SECRET_KEY);
-    let style = {
-      base: {
-        width: "100%",
-        padding:"0.5rem",
-        paddingBottom:"0.5rem",
-        paddingLeft:"0.5rem",
-        paddingRight:"0.5rem",
-        color:"rgb(75 85 99)",
-        backgroundColor:"rgb(229 231 235)",
-        borderRadius:"0.25rem"
 
-      }
-    }
-    const elements = stripe_client.elements();
-    card = elements.create('card',{style,hidePostalCode:true});
-    card.mount("#card-element")
-    }
-  initStripe()
-  return (
-      [card]
-  )
-  },)
-  
-  const dispatch = useDispatch();
+import { Elements } from "@stripe/react-stripe-js";
+import  CardComponent  from "./CardComponent"
+import axios from 'axios';
+import { useSelector } from 'react-redux';
+const CheckoutForm = () => {
+  const stripe = loadStripe(import.meta.env.VITE_STRIPE_SECRET_KEY);
+  const [clientSecret,setClientSecret] = useState("")
+  useEffect(() => {
+    const fetchClientSecret = async () => {
+      const data = await axios.post("/api/payment/create", {
+        amount: TotalPrice+50,
+      });
+      setClientSecret(data.data.clientSecret);
+    };
+
+    fetchClientSecret();
+  }, []);
   const cartState =useSelector(state => state.cartReducer);
   const loginState =useSelector(state => state.loginUserReducer);
   const loginUser = loginState.currentUser;
@@ -47,14 +33,10 @@ const CheckoutForm = () => {
         const [city, setCity] = useState("")
         const [country, setCountry] = useState("India")
         const [zip, setZip] = useState("India")
-  const handleCheckout = (e) => {
-    const stripe_client = loadStripe(import.meta.env.VITE_STRIPE_SECRET_KEY);
-        e.preventDefault()
-        const address = {address_line,city,country,zip}
-        const token = stripe_client.createToken(card)
-        dispatch(placeOrder(token,address,TotalPrice))
+  const address = {address_line,city,country,zip}
+  
+ 
 
-  }
   return (
     <div className="min-h-screen p-4 bg-gray-200 leading-loose">
   <form className="max-w-lg m-4 p-4 bg-white rounded shadow-xl">
@@ -85,11 +67,11 @@ const CheckoutForm = () => {
     </div>
     <p className="mt-4 text-gray-800 font-medium">Payment information</p>
     <div className="" id='card-element'>
-      <label className="block text-sm text-gray-600" htmlFor="cus_card">Card</label>
+      <Elements stripe={stripe}>
+      <CardComponent clientSecret={clientSecret} address={address} TotalPrice={TotalPrice} />
+       </Elements>
       </div>
-    <div className="mt-4">
-      <button className="px-4 py-1 text-white font-light tracking-wider bg-gray-900 rounded"  onClick={handleCheckout}>Pay {TotalPrice} Rs/-</button>
-    </div>
+    
   </form>
 </div>
 

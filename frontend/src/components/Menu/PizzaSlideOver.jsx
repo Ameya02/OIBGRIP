@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-
+import "./SlideOver.css"
 const PizzaSlideOver = ({slide,pizza,setSlide}) => {
   const dispatch = useDispatch();
   const [crust, setCrust] = useState({Name:"",Price:0})
@@ -48,19 +48,16 @@ const PizzaSlideOver = ({slide,pizza,setSlide}) => {
     }]
   }]
 
-  const customCartHandler =() => {
-    dispatch
-  }
   return (
     <div className="w-screen h-screen flex items-center justify-center">
-  <div id="slideover-container" className={`w-screen h-screen fixed inset-0 ${slide ? '':" invisible"} `}>
+  <div id="slideover-container" className={`w-screen h-screen fixed inset-0 ${slide ? '':"invisible"} `}>
     <div  id="slideover-bg" className={`w-full h-full duration-500 ease-out transition-all inset-0 absolute bg-gray-900 ${slide?'opacity-70':"opacity-0"}`}></div>
-    <div  id="slideover" className={`w-[600px] bg-white h-full absolute right-0 duration-300 ease-out transition-all ${slide?"":" translate-x-full"}`}>
+    <div  id="slideover" className={`w-[600px] overflow-y-scroll bg-white h-full absolute right-0 duration-300 ease-out transition-all ${slide?"":" translate-x-full"}`}>
         <div className="absolute cursor-pointer text-[#fff] bg-black top-0 w-8 h-8 flex items-center justify-center right-0 mt-5 mr-5">
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" onClick={()=> setSlide(false)} ><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
         </div>
         <div className='flex flex-col'>
-          <img src={pizza.image} className="w-screen h-68" />
+          <img src={pizza.image} className="w-screen h-[300px]" />
           {pizza.description}
         </div>
         <div>
@@ -68,14 +65,16 @@ const PizzaSlideOver = ({slide,pizza,setSlide}) => {
         </div>
         <div>
           <h2>Select Size</h2>
-          <div>
+          <div className="max-w-screen-xl mx-auto px-20 flex  items-center">
           {customized.map(custom => (
             custom.size.map(size =>(
-          <button
-                  type="radio"
-                  className='border-green-900 px-10 mx-10 h-8 focus:text-red-900  cursor-pointer'>
-                  {size}
-                  </button>))))}
+              <div className="flex w-full relative">
+             <input type="radio" id={size} name="tabs" className="appearance-none" />
+            <label htmlFor={size} className="cursor-pointer w-1/6 flex items-center px-20 justify-center truncate uppercase select-none font-semibold text-lg rounded-full py-2">{size}</label>
+            <div  className="-z-10 px-20 w-1/6 flex items-center justify-center truncate uppercase select-none font-semibold text-lg rounded-full h-full bg-indigo-600 absolute transform transition-transform"/>
+
+
+            </div> ))))}
                   </div>
         </div>
         <div>
@@ -131,7 +130,7 @@ const PizzaSlideOver = ({slide,pizza,setSlide}) => {
 
           
                   <div>
-            <button className='bg-[green] font-medium rounded-md sticky' onClick={customCartHandler}>Add to Cart</button>
+            <button className='bg-[green] font-medium rounded-md sticky' onClick="">Add to Cart</button>
           </div>
         </div>
         

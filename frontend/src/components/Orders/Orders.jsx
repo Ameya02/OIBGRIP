@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { getOrders } from '../../action/orderAction';
 import Navbar from '../NavBar/Nav'
 
@@ -7,7 +8,7 @@ const Orders = () => {
     const dispatch = useDispatch();
     const orderState = useSelector(state => state.getOrderReducer);
     const {orders} = orderState;
-    console.log(orders)
+    
       useEffect(() => {
       dispatch(getOrders())
     }, [dispatch]);
@@ -35,7 +36,7 @@ const Orders = () => {
                                 <td className="py-3 px-6 text-left whitespace-nowrap">
                                     <div className="flex items-center">
                                         
-                                        <span className="font-medium">{order._id}</span>
+                                        <span className="font-medium"><Link to={`${order?._id}/${order?.status}`}>{order._id}  </Link></span>
                                     </div>
                                 </td>
                                 <td className="py-3 px-6 text-left">

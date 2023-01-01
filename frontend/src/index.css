@@ -56,3 +56,19 @@ a {
             transform: translateY(0);
   }
 }
+#Small:checked ~ div {
+  --tw-translate-x: 0%;
+}
+
+#Medium:checked ~ div {
+  --tw-translate-x: 100%;
+}
+
+#Large:checked ~ div {
+  --tw-translate-x: 200%;
+}
+
+
+#tabAnim {
+  z-index: -9;
+}

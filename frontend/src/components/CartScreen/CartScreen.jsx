@@ -3,7 +3,6 @@ import React from 'react'
 import {useDispatch, useSelector} from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import { addToCart, deleteFromCart } from '../../action/cartAction';
-import { placeOrder } from '../../action/orderAction';
 
 import Navbar from '../NavBar/Nav';
 const CartScreen = () => {
@@ -15,36 +14,24 @@ const CartScreen = () => {
       total:TotalPrice
     });
   }
+  var TotalPrice = 0
+    var TotalItems = 0
   const cartState =useSelector(state => state.cartReducer);
   const cartItems = cartState.cartItems;
+  console.log(cartItems)
+  if(cartItems.length>0){
   const TItems = cartItems.map((cartItem) =>(
     [cartItem.quantity]
   
   ))
-  const TotalItems = TItems.reduce((acc, cartItem) => parseInt(acc)+parseInt(cartItem))
+  TotalItems = TItems.reduce((acc, cartItem) => parseInt(acc)+parseInt(cartItem))
   const TPrice = cartItems.map((cartItem) =>(
   [cartItem.price]
   
   ))
-  const TotalPrice = TPrice.reduce((acc, cartItem) => parseInt(acc)+parseInt(cartItem))
-  const handleCheckout = async () => {
-    const stripe_client = await loadStripe(import.meta.env.VITE_STRIPE_SECRET_KEY);
-
-  //   const response = await fetch('/api/stripe', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify(cartItems),
-  //   });
-
-  //   if(response.statusCode === 500) return;
-    
-  //   const data = await response.json();
-  //   console.log(data);
-  //   stripe.redirectToCheckout({ sessionId: data.id });
-    dispatch(placeOrder(stripe_client))
-}
+  TotalPrice = TPrice.reduce((acc, cartItem) => parseInt(acc)+parseInt(cartItem))
+  }
+  
     
 
   return (
@@ -59,7 +46,6 @@ const CartScreen = () => {
           <h2 className="font-semibold text-2xl"></h2>
         </div>
         <div className="flex mt-10 mb-5">
-        
           <h3 className="font-semibold text-gray-600 text-xs uppercase w-2/5">Pizza Details</h3>
           <h3 className="font-semibold  text-gray-600 text-xs uppercase w-1/5 text-center">Quantity</h3>
           <h3 className="font-semibold  text-gray-600 text-xs uppercase w-1/5 text-center">Price</h3>
@@ -126,7 +112,7 @@ const CartScreen = () => {
         <div className="border-t mt-8">
           <div className="flex font-semibold justify-between py-6 text-sm uppercase">
             <span>Total cost</span>
-            <span>{TotalPrice+50} Rs /</span>
+            <span>{TotalPrice>0?TotalPrice+50:0} Rs /</span>
           </div>
           <button className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full"
         onClick={routeChange}>CheckOut</button>

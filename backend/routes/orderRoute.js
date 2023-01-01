@@ -6,10 +6,10 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const Order = require('../models/orderModel');
 router.post('/placeorder',async (req,res) => {
     
-    const {token,address,TotalPrice,currentUser,cartItems} = req.body;
-    console.log(address)
+    const {address,currentUser,cartItems,total} = req.body;
+    console.log(address,currentUser);
     try {
-        {
+        
             const newOrder = new Order( {
                 name: currentUser.name,
                 email: currentUser.email,
@@ -32,7 +32,7 @@ router.post('/placeorder',async (req,res) => {
 
         });
         }
-    } catch (error) {
+     catch (error) {
         res.status(400).json({
             message:"Something went wrong"
         })
@@ -41,6 +41,17 @@ router.post('/placeorder',async (req,res) => {
 router.get('/getorders',async (req,res) => {
     try {
         const  orders = await Order.find({})
+        res.send(orders)
+    } catch (error) {
+        res.json({message:error})
+    }
+
+})
+router.get('/getuserorders:data',async (req,res) => {
+    try {
+        const {currentUser} = req.query;
+        console.log(currentUser);
+        const  orders = await Order.find({email:email})
         res.send(orders)
     } catch (error) {
         res.json({message:error})

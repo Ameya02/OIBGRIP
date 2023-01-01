@@ -18,7 +18,7 @@
     "@syncfusion/ej2-react-popups": "^20.3.60",
     "@syncfusion/ej2-react-schedule": "^20.3.61",
     "@tailwindcss/line-clamp": "^0.4.2",
-    "axios": "^1.2.1",
+    "axios": "^1.2.2",
     "bootstrap": "^5.2.3",
     "dotenv": "^16.0.3",
     "flowbite": "^1.5.5",

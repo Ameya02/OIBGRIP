@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { GiIciclesFence } from 'react-icons/gi';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart,deleteFromCart } from '../../action/cartAction';
-import { useStateContext } from '../../context/ContextProvider';
 import PizzaSlideOver from './PizzaSlideOver';
 
 
@@ -10,12 +8,10 @@ const PizzaCard = ({pizza}) => {
     const [varient, setVarient] = useState("small");
     const [quantity, setQuantity] = useState(0);
     const [slide,setSlide] = useState(false);
-    const {rightslide,setRightSlide} = useStateContext()
     const dispatch = useDispatch();
     const cartState =useSelector(state => state.cartReducer);
     const cartItems = cartState.cartItems;
     useEffect(() => {
-      setRightSlide(slide);
     }, [])
     
 const addToCartHandler = () =>
@@ -27,7 +23,6 @@ const addToCartHandler = () =>
 const deleteFromCartHandler = () =>
 {
     setQuantity((prev)=>--prev)
-    console.log(quantity)
     if(quantity>1)
     {
     dispatch(addToCart(pizza,quantity-1,varient))

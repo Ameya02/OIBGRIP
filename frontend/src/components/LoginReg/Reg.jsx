@@ -43,7 +43,7 @@ const Reg = () => {
       <label className="text-[18px]"  htmlFor='email'>Email</label>
         <input type="text" name="email" placeholder="Email" className='mt-[6px] min-w-[18em] h-[37px] 
         pt-0 pr-[5px] text-[16px] font-sans bg-[#f3f3f3] border-0 rounded-[4px] mb-[31px] transition-all
-         ease-in-out duration-[250ms] focus:outline-none focus:shadow-lg focus:shadow-[#0e81ce96] ' 
+         ease-in-out duration-[250ms] focus:outline-none focus:shadow-lg focus:shadow-[#0e81ce96] '  autoComplete='off'
           onChange={(e)=>setEmail(e.target.value)}
          />
       </div>

@@ -10,8 +10,9 @@ import Log from './components/LoginReg/Log';
 import Reg from './components/LoginReg/Reg';
 import Menu from './components/Menu/Menu';
 import Orders from './components/Orders/Orders';
+import SingleOrder from './components/Orders/SingleOrder';
 
-
+import "./App.css"
 function App() {
 
   return (
@@ -28,6 +29,9 @@ function App() {
       <Route path="/orders" element={<Orders />} />
       <Route path="/admin" element={<AdminPanel />} />
       <Route path="/admin/users" element={<Users />} />
+      <Route path="/orders/:orderid/:status" element={<SingleOrder/>}/>
+      
+
 
     </Routes>
     </BrowserRouter>

@@ -74,3 +74,17 @@ app.post("/api/stripe", async (req, res) => {
     res.status(err.statusCode || 500).json(err.message);
   }
 })
+
+app.post("/api/payment/create", async (req, res) => {
+  const total = req.body.amount;
+  console.log("Payment Request recieved for this ruppess", total);
+
+  const payment = await stripe.paymentIntents.create({
+    amount: total * 100,
+    currency: "inr",
+  });
+
+  res.status(201).send({
+    clientSecret: payment.client_secret,
+  });
+});
